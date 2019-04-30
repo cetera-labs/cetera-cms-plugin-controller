@@ -1,0 +1,36 @@
+{
+  "name": "cetera-labs/cetera-cms-plugin-controller",
+  "description": "Cetera CMS Plugin controller",
+  "version": "1.0",
+  "keywords": [
+    "cms",
+    "composer",
+    "ceteracms",
+    "plugin"
+  ],
+  "homepage": "https://cetera.ru/",
+  "type": "composer-plugin",
+  "authors": [
+        {
+            "name": "Roman Romanov",
+            "email": "nicodim@mail.ru",
+            "role": "Lead Developer"
+        }
+  ],
+  "support": {
+      "forum": "http://community.fastsite.ru/"
+  },
+  "license": "MIT",
+  "minimum-stability": "stable",
+  "require": {
+    "composer-plugin-api": "^1.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Cetera\\Composer\\": "src/"
+    }
+  },
+  "extra": {
+    "class": "Craft\\Composer\\Plugin"
+  }
+}
