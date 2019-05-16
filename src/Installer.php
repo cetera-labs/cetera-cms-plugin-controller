@@ -224,25 +224,6 @@ class Installer extends LibraryInstaller
         $vendorDir = str_replace('\\', '/', $this->vendorDir);
         $n = strlen($vendorDir);
 
-        foreach ($plugins as &$plugin) {
-            // basePath
-            if (isset($plugin['basePath'])) {
-                $path = str_replace('\\', '/', $plugin['basePath']);
-                if (strpos($path.'/', $vendorDir.'/') === 0) {
-                    $plugin['basePath'] = '<vendor-dir>'.substr($path, $n);
-                }
-            }
-            // aliases
-            if (isset($plugin['aliases'])) {
-                foreach ($plugin['aliases'] as $alias => $path) {
-                    $path = str_replace('\\', '/', $path);
-                    if (strpos($path.'/', $vendorDir.'/') === 0) {
-                        $plugin['aliases'][$alias] = '<vendor-dir>'.substr($path, $n);
-                    }
-                }
-            }
-        }
-
         return $plugins;
     }
 
