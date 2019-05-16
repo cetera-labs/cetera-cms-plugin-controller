@@ -94,11 +94,11 @@ class Installer extends LibraryInstaller
 
         $plugin = [];
         
-        // id
-        if (isset($extra['id'])) {
-            $plugin['id'] = $extra['id'];
+        // name
+        if (isset($extra['name'])) {
+            $plugin['name'] = $extra['name'];
         } else {
-            $plugin['id'] = str_replace('/', '.', $prettyName);
+            $plugin['name'] = str_replace('/', '.', $prettyName);
         }         
         
         // title
