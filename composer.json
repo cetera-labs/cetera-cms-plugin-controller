@@ -31,6 +31,6 @@
     }
   },
   "extra": {
-    "class": "Craft\\Composer\\Plugin"
+    "class": "Cetera\\Composer\\Plugin"
   }
 }
