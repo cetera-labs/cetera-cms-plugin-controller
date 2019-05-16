@@ -1,6 +1,5 @@
 <?php
 /**
- * @link    https://craftcms.com/
  * @license MIT
  */
 
