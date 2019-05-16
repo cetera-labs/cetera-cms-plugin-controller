@@ -92,9 +92,14 @@ class Installer extends LibraryInstaller
         $extra = $package->getExtra();
         $prettyName = $package->getPrettyName();
 
-        $plugin = [
-            'id' => str_replace('/', '.', $prettyName)
-        ];
+        $plugin = [];
+        
+        // id
+        if (isset($extra['id'])) {
+            $plugin['id'] = $extra['id'];
+        } else {
+            $plugin['id'] = str_replace('/', '.', $prettyName);
+        }         
         
         // title
         if (isset($extra['title'])) {
