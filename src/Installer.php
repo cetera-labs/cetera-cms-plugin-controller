@@ -133,7 +133,7 @@ class Installer extends LibraryInstaller
         
         $schema = $this->getPackageBasePath($package).'/schema.xml';
         if (file_exists($schema)) {
-            $plugin['schema'] = $schema;
+            $plugin['schema'] = 'schema.xml';
         }
 
         $this->registerPlugin($package->getName(), $plugin);
