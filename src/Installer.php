@@ -131,7 +131,7 @@ class Installer extends LibraryInstaller
             $plugin['author'] = $vendor;
         }
         
-        $schema = $package->getTargetDir().'/schema.xml';
+        $schema = $this->getPackageBasePath($package).'/schema.xml';
         if (file_exists($schema)) {
             $plugin['schema'] = $schema;
         }
