@@ -130,6 +130,11 @@ class Installer extends LibraryInstaller
         } else if ($vendor !== null) {
             $plugin['author'] = $vendor;
         }
+        
+        $schema = $package->getTargetDir().'/schema.xml';
+        if (file_exists($schema)) {
+            $plugin['schema'] = $schema;
+        }
 
         $this->registerPlugin($package->getName(), $plugin);
     }
