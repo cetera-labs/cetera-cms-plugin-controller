@@ -23,7 +23,8 @@
   "license": "MIT",
   "minimum-stability": "stable",
   "require": {
-    "composer-plugin-api": "^1.0"
+    "composer-plugin-api": "^1.0",
+    "composer/package-versions-deprecated": "*"
   },
   "autoload": {
     "psr-4": {
