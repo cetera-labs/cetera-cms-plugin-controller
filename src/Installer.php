@@ -10,6 +10,7 @@ use Composer\Package\CompletePackageInterface;
 use Composer\Package\PackageInterface;
 use Composer\Repository\InstalledRepositoryInterface;
 use Composer\Util\Filesystem;
+use React\Promise\PromiseInterface;
 
 class Installer extends LibraryInstaller
 {
@@ -35,16 +36,12 @@ class Installer extends LibraryInstaller
     public function install(InstalledRepositoryInterface $repo, PackageInterface $package)
     {
         // Install the plugin in vendor/ like a normal Composer library
-        parent::install($repo, $package);
+        $promise = parent::install($repo, $package);
+        $installer = $this;
+        return $promise->then(function () use ($package, $installer) {
+            $installer->addPlugin($package);
+        });        
 
-        // Add the plugin info to plugins.php
-        try {
-            $this->addPlugin($package);
-        } catch (InvalidPluginException $e) {
-            // Rollback
-            parent::uninstall($repo, $package);
-            throw $e;
-        }
     }
 
     /**
@@ -53,22 +50,13 @@ class Installer extends LibraryInstaller
     public function update(InstalledRepositoryInterface $repo, PackageInterface $initial, PackageInterface $target)
     {
         // Update the plugin in vendor/ like a normal Composer library
-        parent::update($repo, $initial, $target);
-
-        // Remove the old plugin info from plugins.php
-        $initialPlugin = $this->removePlugin($initial);
-
-        // Add the new plugin info to plugins.php
-        try {
-            $this->addPlugin($target);
-        } catch (InvalidPluginException $e) {
-            // Rollback
-            parent::update($repo, $target, $initial);
-            if ($initialPlugin !== null) {
-                $this->registerPlugin($initial->getName(), $initialPlugin);
-            }
-            throw $e;
-        }
+        $promise = parent::update($repo, $initial, $target);
+        $installer = $this;
+        return $promise->then(function () use ($initial, $installer, $target) {
+            // Remove the old plugin info from plugins.php
+            $initialPlugin = $installer->removePlugin($initial);
+            $installer->addPlugin($target);
+        });         
     }
 
     /**
@@ -77,10 +65,14 @@ class Installer extends LibraryInstaller
     public function uninstall(InstalledRepositoryInterface $repo, PackageInterface $package)
     {
         // Uninstall the plugin from vendor/ like a normal Composer library
-        parent::uninstall($repo, $package);
+        $promise = parent::uninstall($repo, $package);
+        $installer = $this;
+        return $promise->then(function () use ($package, $installer) {
+            // Remove the plugin info from plugins.php
+            $installer->removePlugin($package);
+        });         
 
-        // Remove the plugin info from plugins.php
-        $this->removePlugin($package);
+        
     }
 
     /**
